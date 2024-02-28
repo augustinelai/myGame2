@@ -35,12 +35,14 @@ class RichRole(Role):
         print(self.player)
 
     def get_reward(self, proportion):
-        """Assume Rich get rewards first, so the proportions thresholds are constant
-        """
         if not self.player.health_check():
             return
-        if (0 <= proportion) and (proportion <= Constant.RICH_REMAINING_PROPORTION.value):
-            self.player.inflow(self.player_pool.get_resource(proportion))
+        reward_threshold = Constant.RICH_REMAINING_PROPORTION.value / \
+            len([p for p in self.player_pool.participants_pool.values() if p.role == 'RICH'])
+        if (0 <= proportion) and (proportion <= reward_threshold) and \
+            (self.player.name in self.player_pool):
+            amount = round(self.player_pool.collective_contribution * proportion, -1)
+            self.player.inflow(self.player_pool.commit_payout_resource(amount))
         print(self.player)
 
 class MiddleRole(Role):
@@ -77,7 +79,8 @@ class MiddleRole(Role):
             len([p for p in self.player_pool.participants_pool.values() if p.role == 'MIDDLE'])
         if (0 <= proportion) and (proportion <= reward_threshold) and \
             (self.player.name in self.player_pool):
-            self.player.inflow(self.player_pool.get_resource(proportion))
+            amount = round(self.player_pool.collective_contribution * proportion, -1)
+            self.player.inflow(self.player_pool.commit_payout_resource(amount))
         print(self.player)
 
 class PoorRole(Role):
@@ -114,5 +117,6 @@ class PoorRole(Role):
             len([p for p in self.player_pool.participants_pool.values() if p.role == 'POOR'])
         if (0 <= proportion) and (proportion <= reward_threshold) and \
             (self.player.name in self.player_pool):
-            self.player.inflow(self.player_pool.get_resource(proportion))
+            amount = round(self.player_pool.collective_contribution * proportion, -1)
+            self.player.inflow(self.player_pool.commit_payout_resource(amount))
         print(self.player)

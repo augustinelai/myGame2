@@ -5,6 +5,7 @@ class PlayerPool:
     def __init__(self):
         self.participants_pool: Dict[str, Player] = dict()
         self.collective_contribution = 0
+        self.commited_resources = 0
 
     def reset_pool(self):
         self.participants_pool = dict()
@@ -15,10 +16,13 @@ class PlayerPool:
     def add_resource(self, amount):
         self.collective_contribution += amount
 
-    def get_resource(self, proportion):
-        outflow = round(self.collective_contribution * proportion, -1)
-        self.collective_contribution -= outflow
-        return outflow
+    def commit_payout_resource(self, amount):
+        self.commited_resources += amount
+        return amount
+
+    def spend_resource(self):
+        self.collective_contribution -= self.commited_resources
+        self.commited_resources = 0
 
     def add_player(self, *players: Player):
         for player in players:
