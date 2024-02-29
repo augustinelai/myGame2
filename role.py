@@ -25,7 +25,7 @@ class RichRole(Role):
         if not self.player.health_check():
             return
         self.player_pool.add_player(self.player)
-        self.player_pool.add_resource(0)
+        # self.player_pool.add_resource(0)
         print(self.player)
 
     def consume(self):

@@ -2,7 +2,7 @@ from role import Role, RichRole, MiddleRole, PoorRole
 from constant import Constant
 from player import Player
 from player_pool import PlayerPool
-from decision import rich_decision, middle_decision, poor_decision
+from decision import naive_hardworking, naive_layback, naive_strike
 
 PLYAER_POOL = PlayerPool()
 
@@ -23,7 +23,10 @@ POOR_LIST: Role = [
     PoorRole(Player('P5', Constant.POOR_LINE.value), PLYAER_POOL)
 ]
 
-for i in range(10):
+NUMBER_OF_ROUNDS = 10
+rich_decision, middle_decision, poor_decision = naive_layback(NUMBER_OF_ROUNDS)
+
+for i in range(NUMBER_OF_ROUNDS):
     print(f'Round {i+1}')
     # Produce Stage
     for role in RICH_LIST:
@@ -44,10 +47,10 @@ for i in range(10):
         role.get_reward(poor_decision[i][1])
     PLYAER_POOL.spend_resource()
 
+    # Reset every round
+    PLYAER_POOL.reset_contribution()
+
     # Consume Stage
-    for role in RICH_LIST:
+    for role in RICH_LIST + MIDDLE_LIST + POOR_LIST:
         role.consume()
-    for role in MIDDLE_LIST:
-        role.consume()
-    for role in POOR_LIST:
-        role.consume()                
+            

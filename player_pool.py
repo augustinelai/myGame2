@@ -16,7 +16,7 @@ class PlayerPool:
     def add_resource(self, amount):
         print(f'Before adding resource, amount is {self.collective_contribution}')
         self.collective_contribution += amount
-        print(f'Before adding resource, amount is {self.collective_contribution}')
+        print(f'After adding resource, amount is {self.collective_contribution}')
 
     def commit_payout_resource(self, amount):
         print(f'Commit payout amount {amount} on {self.collective_contribution}')
