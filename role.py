@@ -40,7 +40,7 @@ class RichRole(Role):
         reward_threshold = Constant.RICH_REMAINING_PROPORTION.value / \
             len([p for p in self.player_pool.participants_pool.values() if p.role == 'RICH'])
         if (0 <= proportion) and (proportion <= reward_threshold) and \
-            (self.player.name in self.player_pool):
+            (self.player.name in self.player_pool.participants_pool):
             amount = round(self.player_pool.collective_contribution * proportion, -1)
             self.player.inflow(self.player_pool.commit_payout_resource(amount))
         print(self.player)
@@ -75,10 +75,10 @@ class MiddleRole(Role):
     def get_reward(self, proportion):
         if not self.player.health_check():
             return
-        reward_threshold = Constant.MIDDLE_REMAINING_PROPORTION.value / \
-            len([p for p in self.player_pool.participants_pool.values() if p.role == 'MIDDLE'])
+        reward_threshold = round(Constant.MIDDLE_REMAINING_PROPORTION.value / \
+            len([p for p in self.player_pool.participants_pool.values() if p.role == 'MIDDLE']), 1)
         if (0 <= proportion) and (proportion <= reward_threshold) and \
-            (self.player.name in self.player_pool):
+            (self.player.name in self.player_pool.participants_pool):
             amount = round(self.player_pool.collective_contribution * proportion, -1)
             self.player.inflow(self.player_pool.commit_payout_resource(amount))
         print(self.player)
@@ -113,10 +113,10 @@ class PoorRole(Role):
     def get_reward(self, proportion):
         if not self.player.health_check():
             return
-        reward_threshold = Constant.POOR_REMAINING_PROPORTION.value / \
-            len([p for p in self.player_pool.participants_pool.values() if p.role == 'POOR'])
+        reward_threshold = round(Constant.POOR_REMAINING_PROPORTION.value / \
+            len([p for p in self.player_pool.participants_pool.values() if p.role == 'POOR']), 1)
         if (0 <= proportion) and (proportion <= reward_threshold) and \
-            (self.player.name in self.player_pool):
+            (self.player.name in self.player_pool.participants_pool):
             amount = round(self.player_pool.collective_contribution * proportion, -1)
             self.player.inflow(self.player_pool.commit_payout_resource(amount))
         print(self.player)

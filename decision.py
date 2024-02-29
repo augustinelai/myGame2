@@ -10,5 +10,5 @@ middle_decision = [
 
 poor_decision = [
     # (produce, get_reward_proportion)
-    (2, 0.25) for i in range(10)
+    (2, 0.2) for i in range(10)
 ]

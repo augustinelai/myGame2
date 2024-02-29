@@ -24,6 +24,7 @@ POOR_LIST: Role = [
 ]
 
 for i in range(10):
+    print(f'Round {i+1}')
     # Produce Stage
     for role in RICH_LIST:
         role.produce(rich_decision[i][0])
@@ -35,13 +36,13 @@ for i in range(10):
     # Reward Stage
     for role in RICH_LIST:
         role.get_reward(rich_decision[i][1])
-        PLYAER_POOL.spend_resource()
+    PLYAER_POOL.spend_resource()
     for role in MIDDLE_LIST:
         role.get_reward(middle_decision[i][1])
-        PLYAER_POOL.spend_resource()
+    PLYAER_POOL.spend_resource()
     for role in POOR_LIST:
         role.get_reward(poor_decision[i][1])
-        PLYAER_POOL.spend_resource()
+    PLYAER_POOL.spend_resource()
 
     # Consume Stage
     for role in RICH_LIST:
